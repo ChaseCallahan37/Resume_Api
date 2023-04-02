@@ -14,6 +14,16 @@ router.get("/events", async (req, res) => {
   }
 });
 
+router.post("/event", async (req, res) => {
+  try {
+    const event = new Event({ ...req.body });
+    event.save();
+    res.send(event);
+  } catch (er) {
+    logging(er);
+  }
+});
+
 router.patch("/event", async (req, res) => {
   const updates = Object.keys(req.body);
   const event = await Event.findById(req.body._id);
