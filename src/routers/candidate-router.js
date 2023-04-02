@@ -14,7 +14,7 @@ console.log(uploadsDirecory);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads"));
+    cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + ".jpg"); // specify the file name (use the current timestamp and '.png' extension)
@@ -41,7 +41,7 @@ router.get("/candidate/resume/:fileName", async (req, res) => {
 
   const filePath = path.join(
     __dirname,
-    "../uploads",
+    "../../uploads",
     `${req.params.fileName}.jpg`
   );
   console.log(`Dir Name: ${filePath}`);
