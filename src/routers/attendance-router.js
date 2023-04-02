@@ -1,12 +1,26 @@
 const express = require("express");
 const multer = require("multer");
-const upload = multer();
+
 const router = express.Router();
 
 const Candidate = require("../data/models/candidate");
 const Resume = require("../data/models/resume");
 const Attendance = require("../data/models/attendance");
+const Event = require("../data/models/event");
 const logging = require("../services/logger");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + ".jpg"); // specify the file name (use the current timestamp and '.png' extension)
+  },
+});
+
+const upload = multer({
+  storage,
+});
 
 router.get("/attendances", async (req, res) => {
   try {
@@ -20,22 +34,21 @@ router.get("/attendances", async (req, res) => {
 });
 
 router.post("/attendance", async (req, res) => {
-  let candidate;
-  const bodyCandidate = req.body.candidate;
-  if (!bodyCandidate._id) {
-    candidate = new Candidate({ ...bodyCandidate });
-    await candidate.save();
-  } else {
-    candidate = await Candidate.findById(bodyCandidate._id);
-  }
+  const candidate = await Candidate.findById(req.body.candidateId);
+  const event = await Event.findById(req.body.eventId);
+
   const attendance = new Attendance({
     createdAt: Date.now(),
-    event: req.body.candidate._id,
+    event: event._id,
     candidate: candidate._id,
   });
+  candidate.attendances.push(attendance._id);
+  event.attendees.push(attendance._id);
   try {
     await attendance.save();
-    res.send({ msg: "Resume succesfully uploaded" });
+    await candidate.save();
+    await event.save();
+    res.send({ msg: "Attendance Successfully saved" });
   } catch (er) {
     res.send({ er });
   }

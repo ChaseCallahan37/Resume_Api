@@ -27,16 +27,27 @@ const upload = multer({
 
 router.get("/candidates", async (req, res) => {
   try {
-    const candidates = await Candidate.find({}).populate("resumes");
+    const candidates = await Candidate.find({})
+      .populate("resumes")
+      .populate("attendances");
     res.send(candidates);
   } catch (er) {
     logging(er);
   }
 });
 
+router.get("/candidate/:candidateId", async (req, res) => {
+  try {
+    const candidate = await Candidate.findById(req.params.candidateId);
+
+    await candidate.populate("attendances");
+
+    res.send(candidate);
+  } catch (error) {}
+});
+
 router.get("/candidate/resume/:fileName", async (req, res) => {
   const filePath = path.join(__dirname, "../../uploads", req.params.fileName);
-  console.log(`Dir Name: ${filePath}`);
   res.sendFile(filePath);
 });
 

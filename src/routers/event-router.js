@@ -14,16 +14,28 @@ router.get("/events", async (req, res) => {
   }
 });
 
-router.post("/event/attendance", async (req, res) => {
-  const event = await Event.findById(req.body.eventId);
-  event.attendees.push(req.body.attendeeId);
-  console.log(event.attendees);
+router.patch("/event", async (req, res) => {
+  const updates = Object.keys(req.body);
+  const event = await Event.findById(req.body._id);
   try {
-    event.save();
-    res.send({ msg: "saved succesfully" });
-  } catch (er) {
-    logging(er);
+    updates.forEach((update) => (event[update] = req.body[update]));
+    await event.save();
+    res.send({ msg: "succesful", event });
+  } catch (error) {
+    logging(error);
   }
 });
+
+// router.post("/event/attendance", async (req, res) => {
+//   const event = await Event.findById(req.body.eventId);
+//   event.attendees.push(req.body.attendeeId);
+//   console.log(event.attendees);
+//   try {
+//     event.save();
+//     res.send({ msg: "saved succesfully" });
+//   } catch (er) {
+//     logging(er);
+//   }
+// });
 
 module.exports = router;

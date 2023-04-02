@@ -28,6 +28,12 @@ const candidateSchema = new mongoose.Schema(
         ref: "Resume",
       },
     ],
+    attendances: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Attendance",
+      },
+    ],
     position: {
       type: String,
       enum: ["internship", "full-time"],
@@ -37,6 +43,19 @@ const candidateSchema = new mongoose.Schema(
   },
   { timeStamps: true }
 );
+
+// candidateSchema.virtual("attendances", {
+//   ref: "Attendance",
+//   localField: "_id",
+//   foreignField: "candidate",
+//   justOne: false, // set this option to false to return an array
+//   get: function () {
+//     return this._attendances; // this will return an array of attendances documents
+//   },
+//   set: function (attendances) {
+//     this._attendances = attendances; // this will set the _attendances property of the Candidate document
+//   },
+// });
 
 const Candidate = mongoose.model("Candidate", candidateSchema);
 
