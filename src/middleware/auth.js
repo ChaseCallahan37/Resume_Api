@@ -6,6 +6,7 @@ const auth = async (req, res, next) => {
       email: req.body.cred.email,
       password: req.body.cred.password,
     });
+    console.log(user);
     if (!user) {
       throw new Error();
     }

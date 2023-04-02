@@ -6,7 +6,7 @@ const User = require("../data/models/user");
 const logging = require("../services/logger");
 const Candidate = require("../data/models/candidate");
 
-router.get("/user", auth, async (req, res) => {
+router.post("/login", auth, async (req, res) => {
   try {
     res.send(req.user);
   } catch (er) {
