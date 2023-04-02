@@ -12,6 +12,7 @@ require("./data/connection");
 const personRouter = require("./routers/event-router");
 const carRouter = require("./routers/candidate-router");
 const attendanceRouter = require("./routers/attendance-router");
+const userRouter = require("./routers/user-router");
 const populate = require("./populate");
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(personRouter);
 app.use(carRouter);
 app.use(attendanceRouter);
+app.use(userRouter);
 
 //General route to prove it is working
 app.get("/", (req, res) => {

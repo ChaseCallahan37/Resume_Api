@@ -8,7 +8,7 @@ const Candidate = require("../data/models/candidate");
 router.get("/user", async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.find({ username, password });
+    const user = await User.findOne({ username, password });
     res.send(user);
   } catch (er) {
     logging(er);
