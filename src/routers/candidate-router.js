@@ -9,7 +9,7 @@ const logging = require("../services/logger");
 
 router.get("/candidates", async (req, res) => {
   try {
-    const candidates = await Candidate.find({}).populate("resumes");
+    const candidates = await Candidate.find({});
     res.send(candidates);
   } catch (er) {
     logging(er);
