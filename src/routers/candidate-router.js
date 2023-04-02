@@ -35,22 +35,9 @@ router.get("/candidates", async (req, res) => {
 });
 
 router.get("/candidate/resume/:fileName", async (req, res) => {
-  // const pdfPath = "example.pdf";
-  // res.setHeader("Content-Type", "application/pdf");
-  // pdfStream.pipe(res);
-
-  const filePath = path.join(
-    __dirname,
-    "../../uploads",
-    `${req.params.fileName}.jpg`
-  );
+  const filePath = path.join(__dirname, "../../uploads", req.params.fileName);
   console.log(`Dir Name: ${filePath}`);
   res.sendFile(filePath);
-  // const pdfStream = fs.createReadStream(`./uploads/${req.params.fileName}`);
-  // res.setHeader("Content-Type", "image/png");
-  // pdfStream.pipe(res);
-
-  // res.sendFile(test3);
 });
 
 router.post(

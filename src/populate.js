@@ -1,5 +1,6 @@
 const Candidate = require("./data/models/candidate");
 const Event = require("./data/models/event");
+const User = require("./data/models/user");
 
 async function populate() {
   await Candidate.deleteMany({});
@@ -146,6 +147,25 @@ async function populate() {
   events[1].attendees.push(newCandidates[1]._id);
 
   await Event.insertMany(events);
+
+  const users = [
+    {
+      email: "email@some.com",
+      firstName: "Henry",
+      lastName: "McGwuir",
+      organization: "Pariveda",
+      password: "password",
+    },
+    {
+      email: "email2@some.com",
+      firstName: "Mary",
+      lastName: "McGwuir",
+      organization: "Pariveda",
+      password: "password2",
+    },
+  ];
+
+  await User.insertMany(users);
 }
 
 module.exports = populate;
