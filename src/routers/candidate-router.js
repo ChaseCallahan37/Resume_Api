@@ -51,6 +51,17 @@ router.get("/candidate/resume/:fileName", async (req, res) => {
   res.sendFile(filePath);
 });
 
+router.post("/candidate", async (req, res) => {
+  console.log(req.body);
+  const candidate = new Candidate({ ...req.body });
+  try {
+    await candidate.save();
+    res.send({ candidate });
+  } catch (error) {
+    logging(error);
+  }
+});
+
 router.post(
   "/candidate/:candidateId/resume",
   upload.single("resume"),
