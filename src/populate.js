@@ -103,6 +103,7 @@ async function populate() {
 
   const events = [
     {
+      active: false,
       title: "Campus Recruiting UA",
       location: "123 Dirt Road",
       startDate: new Date("2024-01-15"),
@@ -111,6 +112,7 @@ async function populate() {
       attendees: [],
     },
     {
+      active: true,
       title: "Campus Recruiting Auburn :(",
       location: "123 Moo Cow Road",
       startDate: new Date("2024-03-15"),
@@ -118,16 +120,32 @@ async function populate() {
       school: "University of Alabama",
       attendees: [],
     },
+    {
+      active: true,
+      title: "Campus Recruiting Mississippi :(",
+      location: "123 Moo Cow Road",
+      startDate: new Date("2024-03-15"),
+      endDate: new Date("2024-03-15"),
+      school: "University of Mississippi",
+      attendees: [],
+    },
+    {
+      active: false,
+      title: "Campus Recruiting Nevada :(",
+      location: "123 Moo Cow Road",
+      startDate: new Date("2024-03-15"),
+      endDate: new Date("2024-03-15"),
+      school: "University of Nevada",
+      attendees: [],
+    },
   ];
 
-  await Event.insertMany(events);
+  const newCandidates = await Candidate.find({});
+  events[0].attendees.push(newCandidates[0]._id);
+  events[1].attendees.push(newCandidates[0]._id);
+  events[1].attendees.push(newCandidates[1]._id);
 
-  const attendee = await Candidate.findOne({ firstName: "John" });
-  const event = await Event.findOne({
-    title: "Campus Recruiting UA",
-  });
-  event.attendees.push(attendee._id);
-  await event.save();
+  await Event.insertMany(events);
 }
 
 module.exports = populate;

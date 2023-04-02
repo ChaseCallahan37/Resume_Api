@@ -8,6 +8,7 @@ const resumeSchema = new mongoose.Schema(
       ref: "Candidate",
     },
     data: Buffer,
+    fileName: String,
   },
   { timeStamps: true }
 );

@@ -8,11 +8,11 @@ const Resume = require("../data/models/resume");
 const Attendance = require("../data/models/attendance");
 const logging = require("../services/logger");
 
-router.get("/attendance", async (req, res) => {
+router.get("/attendances", async (req, res) => {
   try {
     const attendances = await Attendance.find({})
-      .populate("events")
-      .populate("candidates");
+      .populate("event")
+      .populate("candidate");
     res.send(attendances);
   } catch (er) {
     logging(er);

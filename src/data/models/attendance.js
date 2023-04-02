@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const resumeSchema = new mongoose.Schema(
+const attendanceSchema = new mongoose.Schema(
   {
     createdAt: Date,
     candidate: {
@@ -15,6 +15,6 @@ const resumeSchema = new mongoose.Schema(
   { timeStamps: true }
 );
 
-const Resume = mongoose.model("Resume", resumeSchema);
+const Attendance = mongoose.model("Attendance", attendanceSchema);
 
-module.exports = Resume;
+module.exports = Attendance;
