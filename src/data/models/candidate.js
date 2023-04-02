@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 const candidateSchema = new mongoose.Schema(
   {
-    email: String,
-    firstName: String,
-    lastName: String,
     educataionCerts: [
       {
         type: {
@@ -16,13 +13,25 @@ const candidateSchema = new mongoose.Schema(
         },
       },
     ],
+    email: String,
+    events: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Events",
+    },
+    firstName: String,
     gpa: Number,
     graduationDate: Date,
+    lastName: String,
+    resumes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Resume",
+      },
+    ],
     position: {
       type: String,
       enum: ["internship", "full-time"],
     },
-    //Optional
     school: String,
     sponsorshipReq: Boolean,
   },
