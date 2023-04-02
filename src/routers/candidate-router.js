@@ -59,6 +59,7 @@ router.post("/candidate", async (req, res) => {
     res.send({ candidate });
   } catch (error) {
     logging(error);
+    res.send({ error });
   }
 });
 
